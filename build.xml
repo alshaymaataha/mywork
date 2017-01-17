@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="war" name="myservlet">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="myservlet.classpath">
+        <pathelement location="WEB-INF/classes"/>
+        <pathelement location="../../../../usr/share/tomcat/lib/tomcat-servlet-3.1-api.jar"/>
+    </path>
+    <target name="init" depends="clean">
+        <mkdir dir="WEB-INF/classes"/>
+        <copy includeemptydirs="false" todir="WEB-INF/classes">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="WEB-INF/classes"/>
+    </target>
+    
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="WEB-INF/classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="myservlet.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+              	<target name="war" depends="clean,build">
+              	    <war destfile="myservlet.war" webxml="WEB-INF/web.xml">
+              	        <fileset dir="WEB-INF"/>
+              	        <lib dir="WEB-INF/lib"/>
+              	        <classes dir="WEB-INF/classes"/>
+              	    </war>
+              	</target>
+   </project>
